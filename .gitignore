@@ -13,6 +13,7 @@ cmake-build-release/
 *.iws
 
 # IntelliJ
+*.iml
 out/
 
 # mpeltonen/sbt-idea plugin
