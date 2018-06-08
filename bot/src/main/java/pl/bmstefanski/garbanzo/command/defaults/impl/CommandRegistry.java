@@ -16,76 +16,84 @@ import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 import pl.bmstefanski.garbanzo.component.MessageComponent;
-import pl.bmstefanski.garbanzo.service.GarbanzoService;
+import pl.bmstefanski.garbanzo.configuration.GarbanzoProperties;
+import pl.bmstefanski.garbanzo.service.impl.GarbanzoServiceImpl;
 
 public class CommandRegistry {
 
   private final MessageComponent messageComponent;
-  private final GarbanzoService garbanzoService;
+  private final GarbanzoServiceImpl garbanzoService;
+  private final GarbanzoProperties properties;
 
-  public CommandRegistry(MessageComponent messageComponent,
-      GarbanzoService garbanzoService) {
+  public CommandRegistry(MessageComponent messageComponent, GarbanzoServiceImpl garbanzoService,
+      GarbanzoProperties properties) {
     this.messageComponent = messageComponent;
     this.garbanzoService = garbanzoService;
+    this.properties = properties;
   }
 
-  public void registerByClass(Class<? extends CommandExecutor> clazz) {
+  public void registerByClasses(Class<? extends CommandExecutor>... classes) {
     try {
-      CommandExecutor commandExecutor = clazz.newInstance();
-      this.registerByExecutor(commandExecutor);
+      for (Class<? extends CommandExecutor> clazz : classes) {
+        CommandExecutor commandExecutor = clazz.newInstance();
+        this.registerByExecutors(commandExecutor);
+      }
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
   }
 
-  public void registerByExecutor(CommandExecutor commandExecutor) {
-    Method[] methods = commandExecutor.getClass().getMethods();
+  public void registerByExecutors(CommandExecutor... commandExecutors) {
+    for (CommandExecutor commandExecutor : commandExecutors) {
+      Method[] methods = commandExecutor.getClass().getMethods();
 
-    for (Method method : methods) {
-      if (method.isAnnotationPresent(CommandInfo.class)) {
-        CommandInfo commandInfo = method.getAnnotation(CommandInfo.class);
+      for (Method method : methods) {
+        if (method.isAnnotationPresent(CommandInfo.class)) {
+          CommandInfo commandInfo = method.getAnnotation(CommandInfo.class);
 
-        Command command = new CommandBuilder()
-            .withName(commandInfo.name())
-            .withUsage(commandInfo.usage())
-            .withMinArguments(commandInfo.minArguments())
-            .withMaxArguments(commandInfo.maxArguments())
-            .withCommandExecutor(commandExecutor)
-            .build();
+          Command command = new CommandBuilder()
+              .withName(commandInfo.name())
+              .withUsage(commandInfo.usage())
+              .withMinArguments(commandInfo.minArguments())
+              .withMaxArguments(commandInfo.maxArguments())
+              .withCommandExecutor(commandExecutor)
+              .build();
 
-        this.garbanzoService.getJda().addEventListener(new AnnotatedEventManager() {
+          this.garbanzoService.getJda().addEventListener(new AnnotatedEventManager() {
 
-          @SubscribeEvent
-          public void messageReceivedEvent(MessageReceivedEvent event) {
-            MessageChannel messageChannel = event.getChannel();
-            String messageContent = event.getMessage().getContentRaw();
-            CommandSender commandSender = new CommandSenderImpl(messageChannel, messageComponent);
+            @SubscribeEvent
+            public void messageReceivedEvent(MessageReceivedEvent event) {
+              MessageChannel messageChannel = event.getChannel();
+              String messageContent = event.getMessage().getContentRaw();
+              CommandSender commandSender = new CommandSenderImpl(messageChannel, messageComponent);
 
-            if (messageContent.startsWith("!" + command.getName())) {
-              List<String> args = Arrays.stream(messageContent.split(" ")).skip(1)
-                  .collect(Collectors.toList());
+              String prefix = properties.getPrefix();
 
-              if ((args.size() < command.getMinArguments()) || (args.size() > command
-                  .getMaxArguments())) {
+              if (messageContent.startsWith(prefix + command.getName())) {
+                List<String> args = Arrays.stream(messageContent.split(" ")).skip(1)
+                    .collect(Collectors.toList());
 
-                MessageEmbed messageEmbed = new EmbedBuilder()
-                    .setColor(Color.RED)
-                    .setFooter("Invalid command pattern, try this: " + "!" + command.getName() + " "
-                        + command.getUsage(), null)
-                    .build();
-                messageChannel.sendMessage(messageEmbed).queue();
-                return;
+                if ((args.size() < command.getMinArguments()) || (args.size() > command
+                    .getMaxArguments())) {
+
+                  String usage = prefix + command.getName() + " " + command.getUsage();
+                  MessageEmbed messageEmbed = new EmbedBuilder()
+                      .setColor(Color.RED)
+                      .setFooter(messageComponent.get("invalid-pattern", usage), null)
+                      .build();
+                  messageChannel.sendMessage(messageEmbed).queue();
+                  return;
+                }
+
+                commandExecutor.execute(commandSender, args);
               }
-
-              commandExecutor.execute(commandSender, args);
             }
-          }
 
-        });
+          });
 
+        }
       }
     }
-
   }
 
 }

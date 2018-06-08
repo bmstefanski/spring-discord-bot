@@ -1,4 +1,4 @@
-package pl.bmstefanski.garbanzo.command.listener;
+package pl.bmstefanski.garbanzo.listener;
 
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;

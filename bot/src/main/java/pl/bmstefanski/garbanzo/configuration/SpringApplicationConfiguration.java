@@ -1,28 +1,30 @@
 package pl.bmstefanski.garbanzo.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.bmstefanski.garbanzo.command.defaults.impl.CommandRegistry;
 import pl.bmstefanski.garbanzo.component.MessageComponent;
-import pl.bmstefanski.garbanzo.service.GarbanzoService;
+import pl.bmstefanski.garbanzo.service.impl.GarbanzoServiceImpl;
 
 @Configuration
 public class SpringApplicationConfiguration {
 
   private final MessageComponent messageComponent;
-  private final GarbanzoService garbanzoService;
+  private final GarbanzoServiceImpl garbanzoService;
+  private final GarbanzoProperties garbanzoProperties;
 
-  @Autowired
-  public SpringApplicationConfiguration(MessageComponent messageComponent,
-      GarbanzoService garbanzoService) {
+  public SpringApplicationConfiguration(
+      MessageComponent messageComponent,
+      GarbanzoServiceImpl garbanzoService,
+      GarbanzoProperties garbanzoProperties) {
     this.messageComponent = messageComponent;
     this.garbanzoService = garbanzoService;
+    this.garbanzoProperties = garbanzoProperties;
   }
 
   @Bean
-  public CommandRegistry commandRegistry() {
-    return new CommandRegistry(messageComponent, this.garbanzoService);
+  public CommandRegistry commandRegistryBean() {
+    return new CommandRegistry(this.messageComponent, this.garbanzoService, this.garbanzoProperties);
   }
 
 }
