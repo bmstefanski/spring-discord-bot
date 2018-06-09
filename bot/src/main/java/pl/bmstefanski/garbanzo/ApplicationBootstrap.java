@@ -4,7 +4,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import pl.bmstefanski.garbanzo.command.ExampleCommand;
 import pl.bmstefanski.garbanzo.command.RegisterAccountCommand;
 import pl.bmstefanski.garbanzo.command.defaults.impl.CommandRegistry;
 import pl.bmstefanski.garbanzo.dao.impl.UserEntityDaoImpl;
@@ -39,7 +38,6 @@ public class ApplicationBootstrap implements CommandLineRunner {
     );
 
     this.commandRegistry.registerByExecutors(
-        new ExampleCommand(),
         new RegisterAccountCommand(this.userEntityDao)
     );
   }
