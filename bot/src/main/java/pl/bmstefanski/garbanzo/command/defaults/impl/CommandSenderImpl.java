@@ -2,6 +2,7 @@ package pl.bmstefanski.garbanzo.command.defaults.impl;
 
 import java.util.List;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 import pl.bmstefanski.garbanzo.component.MessageComponent;
@@ -37,6 +38,16 @@ public class CommandSenderImpl implements CommandSender {
   @Override
   public void sendMessage(List<String> keys, String... arguments) {
     keys.forEach(key -> this.sendMessage(key, arguments));
+  }
+
+  @Override
+  public String getMessage(String key, String... arguments) {
+    return this.messageComponent.get(key, arguments);
+  }
+
+  @Override
+  public void sendEmbedMessage(MessageEmbed message) {
+    this.messageChannel.sendMessage(message).queue();
   }
 
   @Override

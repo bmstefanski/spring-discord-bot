@@ -1,7 +1,10 @@
 package pl.bmstefanski.garbanzo.command;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
 import org.springframework.stereotype.Component;
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
@@ -28,7 +31,14 @@ public class RegisterAccountCommand implements CommandExecutor {
     Optional<UserEntity> optionalUserEntity = Optional.ofNullable(userEntityDao.read(userId));
 
     if (optionalUserEntity.isPresent()) {
-      commandSender.sendRawMessage("Jestes już zarejestrowany!");
+      String footer = commandSender.getMessage("already-registered");
+
+      MessageEmbed messageEmbed = new EmbedBuilder()
+          .setColor(Color.RED)
+          .setFooter(footer, null)
+          .build();
+
+      commandSender.sendEmbedMessage(messageEmbed);
       return;
     }
 
@@ -41,8 +51,20 @@ public class RegisterAccountCommand implements CommandExecutor {
 
     this.userEntityDao.create(userEntity);
 
-    commandSender.sendRawMessage("Pomyslnie zarejestrowano! \n Name: %s \n Identifier: %s",
-        userEntity.getName(), userEntity.getIdentifier());
+    String title = commandSender.getMessage("successfully-registered");
+    String nickname = commandSender.getMessage("nickname");
+    String identifier = commandSender.getMessage("identifier");
+    String date = commandSender.getMessage("date");
+
+    MessageEmbed messageEmbed = new EmbedBuilder()
+        .setColor(Color.GREEN)
+        .setTitle(title)
+        .addField(nickname, userEntity.getName(), true)
+        .addField(identifier, userEntity.getIdentifier().toString(), true)
+        .addField(date, "todo", true)
+        .build();
+
+    commandSender.sendEmbedMessage(messageEmbed);
   }
 
 }
