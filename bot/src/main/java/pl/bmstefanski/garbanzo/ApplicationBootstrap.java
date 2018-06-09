@@ -5,19 +5,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import pl.bmstefanski.garbanzo.command.ExampleCommand;
+import pl.bmstefanski.garbanzo.command.RegisterAccountCommand;
 import pl.bmstefanski.garbanzo.command.defaults.impl.CommandRegistry;
-import pl.bmstefanski.garbanzo.service.impl.GarbanzoServiceImpl;
+import pl.bmstefanski.garbanzo.dao.impl.UserEntityDaoImpl;
+import pl.bmstefanski.garbanzo.listener.GuildMemberJoinListener;
+import pl.bmstefanski.garbanzo.service.GarbanzoService;
 
 @EnableConfigurationProperties
 @SpringBootApplication
 public class ApplicationBootstrap implements CommandLineRunner {
 
-  private final GarbanzoServiceImpl garbanzoService;
+  private final GarbanzoService garbanzoService;
   private final CommandRegistry commandRegistry;
+  private final UserEntityDaoImpl userEntityDao;
 
-  public ApplicationBootstrap(GarbanzoServiceImpl garbanzoService, CommandRegistry commandRegistry) {
+  public ApplicationBootstrap(GarbanzoService garbanzoService, CommandRegistry commandRegistry,
+      UserEntityDaoImpl userEntityDao) {
     this.garbanzoService = garbanzoService;
     this.commandRegistry = commandRegistry;
+    this.userEntityDao = userEntityDao;
   }
 
   public static void main(String[] args) {
@@ -29,11 +35,12 @@ public class ApplicationBootstrap implements CommandLineRunner {
     this.garbanzoService.startBot();
 
     this.garbanzoService.registerListeners(
-
+        new GuildMemberJoinListener(this.userEntityDao)
     );
 
     this.commandRegistry.registerByExecutors(
-        new ExampleCommand()
+        new ExampleCommand(),
+        new RegisterAccountCommand(this.userEntityDao)
     );
   }
 

@@ -6,11 +6,8 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import pl.bmstefanski.garbanzo.listener.Listener;
 import pl.bmstefanski.garbanzo.service.GarbanzoService;
 
-@Service
 public class GarbanzoServiceImpl implements GarbanzoService {
 
   private JDA jda;
@@ -32,8 +29,8 @@ public class GarbanzoServiceImpl implements GarbanzoService {
   }
 
   @Override
-  public void registerListeners(Listener... listeners) {
-    this.jda.addEventListener((Object[]) listeners);
+  public void registerListeners(Object... listeners) {
+    this.jda.addEventListener(listeners);
   }
 
   @Override

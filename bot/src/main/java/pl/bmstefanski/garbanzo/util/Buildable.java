@@ -1,6 +1,6 @@
 package pl.bmstefanski.garbanzo.util;
 
-public interface Builder<T> {
+public interface Buildable<T> {
 
   T build();
 

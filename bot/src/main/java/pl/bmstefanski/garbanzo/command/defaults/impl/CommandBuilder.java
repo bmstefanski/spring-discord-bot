@@ -2,9 +2,9 @@ package pl.bmstefanski.garbanzo.command.defaults.impl;
 
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.Command;
-import pl.bmstefanski.garbanzo.util.Builder;
+import pl.bmstefanski.garbanzo.util.Buildable;
 
-public class CommandBuilder implements Builder<Command> {
+public class CommandBuilder implements Buildable<Command> {
 
   private String name;
   private String usage = "";

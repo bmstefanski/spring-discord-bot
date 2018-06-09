@@ -17,15 +17,15 @@ import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 import pl.bmstefanski.garbanzo.component.MessageComponent;
 import pl.bmstefanski.garbanzo.configuration.GarbanzoProperties;
-import pl.bmstefanski.garbanzo.service.impl.GarbanzoServiceImpl;
+import pl.bmstefanski.garbanzo.service.GarbanzoService;
 
 public class CommandRegistry {
 
   private final MessageComponent messageComponent;
-  private final GarbanzoServiceImpl garbanzoService;
+  private final GarbanzoService garbanzoService;
   private final GarbanzoProperties properties;
 
-  public CommandRegistry(MessageComponent messageComponent, GarbanzoServiceImpl garbanzoService,
+  public CommandRegistry(MessageComponent messageComponent, GarbanzoService garbanzoService,
       GarbanzoProperties properties) {
     this.messageComponent = messageComponent;
     this.garbanzoService = garbanzoService;
@@ -65,7 +65,8 @@ public class CommandRegistry {
             public void messageReceivedEvent(MessageReceivedEvent event) {
               MessageChannel messageChannel = event.getChannel();
               String messageContent = event.getMessage().getContentRaw();
-              CommandSender commandSender = new CommandSenderImpl(messageChannel, messageComponent);
+              CommandSender commandSender = new CommandSenderImpl(messageChannel, messageComponent,
+                  event.getAuthor());
 
               String prefix = properties.getPrefix();
 
