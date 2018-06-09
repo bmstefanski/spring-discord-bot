@@ -1,5 +1,7 @@
 package pl.bmstefanski.garbanzo.listener;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.util.Optional;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
@@ -31,6 +33,7 @@ public class GuildMemberJoinListener {
     UserEntityImpl userEntity = new UserEntityImpl.Builder()
         .withIdentifier(user.getIdLong())
         .withName(user.getName())
+        .setRegistrationDate(Date.from(Instant.now()))
         .build();
 
     this.userEntityDao.create(userEntity);

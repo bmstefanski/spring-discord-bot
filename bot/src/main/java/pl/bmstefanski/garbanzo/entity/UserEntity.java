@@ -1,11 +1,15 @@
 package pl.bmstefanski.garbanzo.entity;
 
+import java.util.Date;
+
 public interface UserEntity extends Entity<Long> {
 
   String getName();
 
   void setName(String name);
 
-  void setIdentifier(Long identifier);
+  Date getRegistrationDate();
+
+  void setRegistrationDate(Date registrationDate);
 
 }

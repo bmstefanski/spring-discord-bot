@@ -1,6 +1,8 @@
 package pl.bmstefanski.garbanzo.command;
 
 import java.awt.Color;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -47,6 +49,7 @@ public class RegisterAccountCommand implements CommandExecutor {
     UserEntityImpl userEntity = new UserEntityImpl.Builder()
         .withIdentifier(jdaUser.getIdLong())
         .withName(jdaUser.getName())
+        .setRegistrationDate(Date.from(Instant.now()))
         .build();
 
     this.userEntityDao.create(userEntity);
@@ -61,7 +64,7 @@ public class RegisterAccountCommand implements CommandExecutor {
         .setTitle(title)
         .addField(nickname, userEntity.getName(), true)
         .addField(identifier, userEntity.getIdentifier().toString(), true)
-        .addField(date, "todo", true)
+        .addField(date, userEntity.getRegistrationDate().toString(), true)
         .build();
 
     commandSender.sendEmbedMessage(messageEmbed);
