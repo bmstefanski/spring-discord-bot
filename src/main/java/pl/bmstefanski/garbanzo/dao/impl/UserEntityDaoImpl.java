@@ -7,7 +7,7 @@ import pl.bmstefanski.garbanzo.entity.impl.UserEntityImpl;
 @Repository
 public class UserEntityDaoImpl extends AbstractEntityDao<UserEntityImpl, Long> {
 
-  public UserEntityDaoImpl() {
+  protected UserEntityDaoImpl() {
     super(UserEntityImpl.class);
   }
 
