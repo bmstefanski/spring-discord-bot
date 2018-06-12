@@ -38,7 +38,7 @@ See the [License][license] file.
 [maintability]: https://codeclimate.com/github/bmstefanski/minecraft-spring-shop/maintainability
 [appveyor-icon]: https://ci.appveyor.com/api/projects/status/qekeotnyecdnpr2c/branch/master?svg=true
 [appveyor]: https://ci.appveyor.com/project/bmstefanski/friendly-garbanzo/branch/master
-[travis-icon]: https://travis-ci.org/bmstefanski/minecraft-spring-shop.svg?branch=master
-[travis]: https://travis-ci.org/bmstefanski/minecraft-spring-shop
+[travis-icon]: https://travis-ci.org/bmstefanski/friendly-garbanzo.svg?branch=master
+[travis]: https://travis-ci.org/bmstefanski/friendly-garbanzo
 [license]: https://github.com/bmstefanski/friendly-garbanzo/blob/master/LICENSE
 [google-code-style]: https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml
