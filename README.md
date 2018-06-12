@@ -32,10 +32,10 @@ The first rule, the only rule, is that you need use [Google Code Style][google-c
 ## License
 See the [License][license] file.
 
-[coverage-icon]: https://coveralls.io/repos/github/bmstefanski/minecraft-spring-shop/badge.svg
-[coverage]: https://coveralls.io/github/bmstefanski/minecraft-spring-shop
-[maintability-icon]: https://api.codeclimate.com/v1/badges/24f7c88d8a95b6e1f10a/maintainability
-[maintability]: https://codeclimate.com/github/bmstefanski/minecraft-spring-shop/maintainability
+[coverage-icon]: https://coveralls.io/repos/github/bmstefanski/friendly-garbanzo/badge.svg?branch=master
+[coverage]: https://coveralls.io/github/bmstefanski/friendly-garbanzo?branch=master
+[maintability-icon]: https://api.codeclimate.com/v1/badges/c3999fe48e9f82826c72/maintainability
+[maintability]: https://codeclimate.com/github/bmstefanski/friendly-garbanzo/maintainability
 [appveyor-icon]: https://ci.appveyor.com/api/projects/status/qekeotnyecdnpr2c/branch/master?svg=true
 [appveyor]: https://ci.appveyor.com/project/bmstefanski/friendly-garbanzo/branch/master
 [travis-icon]: https://travis-ci.org/bmstefanski/friendly-garbanzo.svg?branch=master
