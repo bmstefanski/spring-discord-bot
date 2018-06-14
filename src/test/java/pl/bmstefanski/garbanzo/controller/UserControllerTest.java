@@ -86,6 +86,5 @@ public class UserControllerTest {
     verify(this.userEntityDao).readAll();
     verifyNoMoreInteractions(this.userEntityDao);
   }
-
-
+  
 }

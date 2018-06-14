@@ -32,5 +32,4 @@ public class WhitelabelControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-
 }
