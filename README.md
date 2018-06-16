@@ -20,6 +20,26 @@ Discord all-purpose bot, made using Spring Boot, JPA, Hibernate, REST, HikariCP.
 - [x] Public rest api without oauth
 - [ ] soon
 
+## Configuration
+Create file named `application.properties` in your resource directory, with the following content:
+```properties
+# DATA SOURCE
+spring.datasource.url=jdbc:mysql://localhost:3306/garbanzo
+spring.datasource.username=root
+spring.datasource.password=root
+# JPA HIBERNATE
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.use-new-id-generator-mappings=false
+spring.jpa.open-in-view=false
+# I18N
+spring.messages.basename=locale/messages
+spring.messages.encoding=UTF-8
+spring.messages.fallback-to-system-locale=true
+# JDA
+jda.discord.token=your discord key
+```
+
 ## Contributing
 - fork it
 - create your own branch, like so: `command/xx/8ball`, where `xx` are your initials.
