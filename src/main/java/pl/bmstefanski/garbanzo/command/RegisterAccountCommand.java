@@ -25,7 +25,7 @@ public class RegisterAccountCommand implements CommandExecutor {
     this.userEntityDao = userEntityDao;
   }
 
-  @CommandInfo(name = "register")
+  @CommandInfo("register")
   @Override
   public void execute(CommandSender commandSender, List<String> args) {
     long userId = commandSender.getJdaUser().getIdLong();

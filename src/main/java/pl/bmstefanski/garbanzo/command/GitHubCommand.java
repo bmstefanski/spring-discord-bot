@@ -15,13 +15,13 @@ import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 
 public class GitHubCommand implements CommandExecutor {
 
-  @CommandInfo(name = "github", minArguments = 1, maxArguments = 1)
+  @CommandInfo(value = "github", minArguments = 1, maxArguments = 1, usage = "<username>")
   @Override
   public void execute(CommandSender commandSender, List<String> args) {
     try {
       HttpResponse<JsonNode> httpResponse = Unirest.get("https://api.github.com/users/{username}")
+          .header("Accept", "application/json")
           .routeParam("username", args.get(0))
-          .header("Content-Type", "application/json")
           .asJson();
 
       if (httpResponse.getStatus() == 404) {

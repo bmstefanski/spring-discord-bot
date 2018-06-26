@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface CommandInfo {
 
-  String name();
+  String value();
 
   String usage() default "";
 

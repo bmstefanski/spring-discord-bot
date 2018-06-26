@@ -52,7 +52,7 @@ public class CommandRegistry {
           CommandInfo commandInfo = method.getAnnotation(CommandInfo.class);
 
           Command command = new CommandBuilder()
-              .withName(commandInfo.name())
+              .withName(commandInfo.value())
               .withUsage(commandInfo.usage())
               .withMinArguments(commandInfo.minArguments())
               .withMaxArguments(commandInfo.maxArguments())
