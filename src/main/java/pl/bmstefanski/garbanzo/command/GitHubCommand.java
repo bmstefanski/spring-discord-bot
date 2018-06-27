@@ -49,7 +49,7 @@ public class GitHubCommand implements CommandExecutor {
       int gists = jsonObject.getInt("public_gists");
 
       MessageEmbed messageEmbed = new EmbedBuilder()
-          .setColor(Color.BLACK)
+          .setColor(Color.decode("#2b2b2b"))
           .setThumbnail(avatarUrl)
           .addField("Name", "[" + login + "]" + "(" + profileUrl + ")", true)
           .addField("Bio", bio, true)

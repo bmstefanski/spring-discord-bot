@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pl.bmstefanski.garbanzo.command.CommitCommand;
 import pl.bmstefanski.garbanzo.command.GitHubCommand;
 import pl.bmstefanski.garbanzo.command.RegisterAccountCommand;
+import pl.bmstefanski.garbanzo.command.SayCommand;
 import pl.bmstefanski.garbanzo.command.defaults.impl.CommandRegistry;
 import pl.bmstefanski.garbanzo.dao.impl.UserEntityDaoImpl;
 import pl.bmstefanski.garbanzo.listener.GuildMemberJoinListener;
@@ -44,7 +45,8 @@ public class ApplicationBootstrap implements CommandLineRunner {
     this.commandRegistry.registerByExecutors(
         new RegisterAccountCommand(this.userEntityDao),
         new GitHubCommand(),
-        new CommitCommand()
+        new CommitCommand(),
+        new SayCommand()
     );
   }
 
