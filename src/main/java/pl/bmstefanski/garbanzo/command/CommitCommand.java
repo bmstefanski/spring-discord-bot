@@ -29,24 +29,28 @@ public class CommitCommand implements CommandExecutor {
       JSONArray yearsJsonArray = httpResponse.getBody().getObject().getJSONArray("years");
 
       if (yearsJsonArray.length() == 0) {
+        String footerMessage = commandSender.getMessage("wrong-username");
         MessageEmbed messageEmbeds = new EmbedBuilder()
             .setColor(Color.RED)
-            .setFooter("Username doesn't match to any account!", null)
+            .setFooter(footerMessage, null)
             .build();
 
         commandSender.sendEmbedMessage(messageEmbeds);
         return;
       }
 
+      String titleMessage = commandSender.getMessage("activity-title", args.get(0));
+
       if (args.size() == 1) {
         EmbedBuilder embedBuilder = new EmbedBuilder()
             .setColor(Color.GREEN)
-            .setTitle(args.get(0) + "'s" + " activity");
+            .setTitle(titleMessage);
 
         for (int i = 0; i < yearsJsonArray.length(); i++) {
-          embedBuilder.addField("Year "
-              + yearsJsonArray.getJSONObject(i).getString("year")
-              + ":", String.valueOf(yearsJsonArray.getJSONObject(i).getInt("total")), true);
+          String fieldMessage = commandSender
+              .getMessage("year", yearsJsonArray.getJSONObject(i).getString("year"));
+          embedBuilder.addField(fieldMessage,
+              String.valueOf(yearsJsonArray.getJSONObject(i).getInt("total")), true);
         }
 
         commandSender.sendEmbedMessage(embedBuilder.build());
@@ -56,18 +60,20 @@ public class CommitCommand implements CommandExecutor {
       JSONArray contributionsJsonArray = httpResponse.getBody().getObject()
           .getJSONArray("contributions");
 
+      String footerMessage = commandSender.getMessage("no-activity", args.get(1));
       EmbedBuilder embedBuilder = new EmbedBuilder()
           .setColor(Color.RED)
-          .setFooter("Cannot find activity from: " + args.get(1), null);
+          .setFooter(footerMessage, null);
 
       for (int i = 0; i < contributionsJsonArray.length(); i++) {
         JSONObject jsonObject = contributionsJsonArray.getJSONObject(i);
 
         if (args.get(1).equals(jsonObject.getString("date"))) {
-          embedBuilder.setTitle(args.get(0) + "'s" + " activity");
+          embedBuilder.setTitle(titleMessage);
           embedBuilder.setColor(Color.decode(jsonObject.getString("color")));
-          embedBuilder.addField("Searching date", args.get(1), true);
-          embedBuilder.addField("Contributions count", String.valueOf(jsonObject.getInt("count")), true);
+          embedBuilder.addField(commandSender.getMessage("searching-date"), args.get(1), true);
+          embedBuilder.addField(commandSender.getMessage("contributions"),
+              String.valueOf(jsonObject.getInt("count")), true);
           embedBuilder.setFooter(null, null);
         }
 

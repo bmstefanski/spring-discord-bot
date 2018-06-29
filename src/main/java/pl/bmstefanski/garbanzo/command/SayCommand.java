@@ -28,7 +28,7 @@ public class SayCommand implements CommandExecutor {
     Matcher matcher = pattern.matcher(stringBuilder.toString());
 
     if (!matcher.find()) {
-      this.performMessageFooter(commandSender, "Invalid json format!", Color.RED);
+      this.performMessageFooter(commandSender, commandSender.getMessage("invalid-json"), Color.RED);
       return;
     }
 
@@ -43,7 +43,7 @@ public class SayCommand implements CommandExecutor {
             Color.decode("#2b2b2b"));
         break;
       default:
-        this.performMessageFooter(commandSender, "Wrong message type: [normal, footer]", Color.RED);
+        this.performMessageFooter(commandSender, commandSender.getMessage("wrong-message-type"), Color.RED);
     }
   }
 

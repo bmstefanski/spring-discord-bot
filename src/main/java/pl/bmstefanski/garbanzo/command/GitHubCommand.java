@@ -25,9 +25,10 @@ public class GitHubCommand implements CommandExecutor {
           .asJson();
 
       if (httpResponse.getStatus() == 404) {
+        String footerMessage = commandSender.getMessage("wrong-username");
         MessageEmbed messageEmbeds = new EmbedBuilder()
             .setColor(Color.RED)
-            .setFooter("Username doesn't match to any account!", null)
+            .setFooter(footerMessage, null)
             .build();
 
         commandSender.sendEmbedMessage(messageEmbeds);
@@ -39,8 +40,7 @@ public class GitHubCommand implements CommandExecutor {
       String login = jsonObject.getString("login");
       String profileUrl = jsonObject.getString("html_url");
       String bio = jsonObject.isNull("bio") ? "" : String.valueOf(jsonObject.get("bio"));
-      String location =
-          jsonObject.isNull("location") ? "" : String.valueOf(jsonObject.get("location"));
+      String location = jsonObject.isNull("location") ? "" : String.valueOf(jsonObject.get("location"));
       String registrationDate = jsonObject.getString("created_at");
       String avatarUrl = jsonObject.getString("avatar_url");
       int followers = jsonObject.getInt("followers");
@@ -51,14 +51,14 @@ public class GitHubCommand implements CommandExecutor {
       MessageEmbed messageEmbed = new EmbedBuilder()
           .setColor(Color.decode("#2b2b2b"))
           .setThumbnail(avatarUrl)
-          .addField("Name", "[" + login + "]" + "(" + profileUrl + ")", true)
-          .addField("Bio", bio, true)
-          .addField("Location", location, true)
-          .addField("Registration date", registrationDate, true)
-          .addField("Followers", String.valueOf(followers), true)
-          .addField("Following", String.valueOf(following), true)
-          .addField("Repositories", String.valueOf(repositories), true)
-          .addField("Gists", String.valueOf(gists), true)
+          .addField(commandSender.getMessage("name"), "[" + login + "]" + "(" + profileUrl + ")", true)
+          .addField(commandSender.getMessage("bio"), bio, true)
+          .addField(commandSender.getMessage("location"), location, true)
+          .addField(commandSender.getMessage("registration"), registrationDate, true)
+          .addField(commandSender.getMessage("followers"), String.valueOf(followers), true)
+          .addField(commandSender.getMessage("following"), String.valueOf(following), true)
+          .addField(commandSender.getMessage("repositories"), String.valueOf(repositories), true)
+          .addField(commandSender.getMessage("gists"), String.valueOf(gists), true)
           .build();
 
       commandSender.sendEmbedMessage(messageEmbed);
