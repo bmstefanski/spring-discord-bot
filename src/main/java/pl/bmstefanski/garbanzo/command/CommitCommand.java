@@ -3,9 +3,9 @@ package pl.bmstefanski.garbanzo.command;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import java.awt.Color;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import org.json.JSONArray;
@@ -27,7 +27,8 @@ public class CommitCommand implements CommandExecutor {
           .get(RestServiceType.GITHUB_ACTIVITY_API_URL)
           .header("Accept", "application/json")
           .routeParam("username", args.get(0))
-          .asJson();
+          .asJsonAsync()
+          .get();
 
       JSONArray yearsJsonArray = httpResponse.getBody().getObject().getJSONArray("years");
 
@@ -83,7 +84,7 @@ public class CommitCommand implements CommandExecutor {
       }
 
       commandSender.sendEmbedMessage(embedBuilder.build());
-    } catch (UnirestException e) {
+    } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
   }

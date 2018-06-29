@@ -3,9 +3,9 @@ package pl.bmstefanski.garbanzo.command;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import java.awt.Color;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import org.json.JSONObject;
@@ -25,7 +25,8 @@ public class GitHubCommand implements CommandExecutor {
       HttpResponse<JsonNode> httpResponse = Unirest.get(RestServiceType.GITHUB_API_URL)
           .header("Accept", "application/json")
           .routeParam("username", args.get(0))
-          .asJson();
+          .asJsonAsync()
+          .get();
 
       if (httpResponse.getStatus() == 404) {
         String footerMessage = commandSender.getMessage("wrong-username");
@@ -65,7 +66,7 @@ public class GitHubCommand implements CommandExecutor {
           .build();
 
       commandSender.sendEmbedMessage(messageEmbed);
-    } catch (UnirestException e) {
+    } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
   }
