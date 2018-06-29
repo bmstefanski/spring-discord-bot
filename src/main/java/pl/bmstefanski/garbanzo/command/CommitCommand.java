@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
+import pl.bmstefanski.garbanzo.util.RestServiceType;
 
 @Component
 public class CommitCommand implements CommandExecutor {
@@ -23,7 +24,7 @@ public class CommitCommand implements CommandExecutor {
   public void execute(CommandSender commandSender, List<String> args) {
     try {
       HttpResponse<JsonNode> httpResponse = Unirest
-          .get("https://github-contributions-api.now.sh/v1/{username}")
+          .get(RestServiceType.GITHUB_ACTIVITY_API_URL)
           .header("Accept", "application/json")
           .routeParam("username", args.get(0))
           .asJson();
