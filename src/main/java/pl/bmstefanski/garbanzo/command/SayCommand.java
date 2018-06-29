@@ -7,10 +7,12 @@ import java.util.regex.Pattern;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 
+@Component
 public class SayCommand implements CommandExecutor {
 
   @CommandInfo(value = "say", minArguments = 1, maxArguments = Integer.MAX_VALUE, usage = "(?:{\"type\":\")(.*?)(?:\",.\"message\":\")(.*?)(?:\"})")

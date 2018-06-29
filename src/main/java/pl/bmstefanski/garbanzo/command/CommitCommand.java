@@ -10,10 +10,12 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 
+@Component
 public class CommitCommand implements CommandExecutor {
 
   @CommandInfo(value = "commit", minArguments = 1, maxArguments = 2, usage = "<username> [Yyyy-Mm-Dd]")

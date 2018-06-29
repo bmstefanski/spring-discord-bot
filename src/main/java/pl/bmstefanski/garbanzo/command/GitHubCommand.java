@@ -9,10 +9,12 @@ import java.util.List;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
 
+@Component
 public class GitHubCommand implements CommandExecutor {
 
   @CommandInfo(value = "github", minArguments = 1, maxArguments = 1, usage = "<username>")
