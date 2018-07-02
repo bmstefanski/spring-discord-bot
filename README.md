@@ -18,7 +18,9 @@ Discord all-purpose bot, made using Spring Boot, JPA, Hibernate, REST, HikariCP.
 ## Features
 - [x] Storing all user's data to mysql database
 - [x] Public rest api without oauth
-- [ ] soon
+- [x] Github command, that shows infos about your github profile
+- [x] Commit command - displays commits' count
+- [x] Say command, that talks in json
 
 ## Configuration
 Create file named `application.properties` in your resource directory, with the following content:
