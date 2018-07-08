@@ -8,21 +8,26 @@ import java.util.Optional;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.bmstefanski.garbanzo.command.defaults.CommandExecutor;
 import pl.bmstefanski.garbanzo.command.defaults.CommandInfo;
 import pl.bmstefanski.garbanzo.command.defaults.CommandSender;
-import pl.bmstefanski.garbanzo.dao.impl.UserEntityDaoImpl;
-import pl.bmstefanski.garbanzo.entity.UserEntity;
 import pl.bmstefanski.garbanzo.entity.impl.UserEntityImpl;
+import pl.bmstefanski.garbanzo.repository.UserRepository;
 
 @Component
 public class RegisterAccountCommand implements CommandExecutor {
 
-  private final UserEntityDaoImpl userEntityDao;
+  private final UserRepository userRepository;
 
-  public RegisterAccountCommand(UserEntityDaoImpl userEntityDao) {
-    this.userEntityDao = userEntityDao;
+  @Autowired
+  public RegisterAccountCommand(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public RegisterAccountCommand() {
+    this(null);
   }
 
   @CommandInfo("register")
@@ -30,7 +35,7 @@ public class RegisterAccountCommand implements CommandExecutor {
   public void execute(CommandSender commandSender, List<String> args) {
     long userId = commandSender.getJdaUser().getIdLong();
 
-    Optional<UserEntity> optionalUserEntity = Optional.ofNullable(userEntityDao.read(userId));
+    Optional<UserEntityImpl> optionalUserEntity = userRepository.findById(userId);
 
     if (optionalUserEntity.isPresent()) {
       String footer = commandSender.getMessage("already-registered");
@@ -52,7 +57,7 @@ public class RegisterAccountCommand implements CommandExecutor {
         .setRegistrationDate(Date.from(Instant.now()))
         .build();
 
-    this.userEntityDao.create(userEntity);
+    this.userRepository.save(userEntity);
 
     String title = commandSender.getMessage("successfully-registered");
     String nickname = commandSender.getMessage("nickname");

@@ -6,25 +6,30 @@ import java.util.Optional;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.bmstefanski.garbanzo.dao.impl.UserEntityDaoImpl;
-import pl.bmstefanski.garbanzo.entity.UserEntity;
 import pl.bmstefanski.garbanzo.entity.impl.UserEntityImpl;
+import pl.bmstefanski.garbanzo.repository.UserRepository;
 
 @Component
 public class GuildMemberJoinListener {
 
-  private UserEntityDaoImpl userEntityDao;
+  private final UserRepository userRepository;
 
-  public GuildMemberJoinListener(UserEntityDaoImpl userEntityDao) {
-    this.userEntityDao = userEntityDao;
+  @Autowired
+  public GuildMemberJoinListener(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public GuildMemberJoinListener() {
+    this(null);
   }
 
   @SubscribeEvent
   public void execute(GuildMemberJoinEvent event) {
     User user = event.getUser();
 
-    Optional<UserEntity> optionalUserEntity = Optional.ofNullable(this.userEntityDao.read(user.getIdLong()));
+    Optional<UserEntityImpl> optionalUserEntity = this.userRepository.findById(user.getIdLong());
 
     if (optionalUserEntity.isPresent()) {
       return;
@@ -36,7 +41,7 @@ public class GuildMemberJoinListener {
         .setRegistrationDate(Date.from(Instant.now()))
         .build();
 
-    this.userEntityDao.create(userEntity);
+    this.userRepository.save(userEntity);
   }
 
 }
