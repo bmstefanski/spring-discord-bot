@@ -20,7 +20,7 @@ public class GarbanzoServiceImpl implements GarbanzoService {
     this.jda = new JDABuilder(AccountType.BOT)
         .setToken(token)
         .setEventManager(new AnnotatedEventManager())
-        .buildBlocking();
+        .buildAsync();
   }
 
   @Override

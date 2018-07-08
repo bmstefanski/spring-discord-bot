@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pl.bmstefanski.garbanzo.command.CommitCommand;
+import pl.bmstefanski.garbanzo.command.EightBallCommand;
 import pl.bmstefanski.garbanzo.command.FactCommand;
 import pl.bmstefanski.garbanzo.command.GitHubCommand;
 import pl.bmstefanski.garbanzo.command.RegisterAccountCommand;
@@ -48,7 +49,8 @@ public class ApplicationBootstrap implements CommandLineRunner {
         new GitHubCommand(),
         new CommitCommand(),
         new SayCommand(),
-        new FactCommand()
+        new FactCommand(),
+        new EightBallCommand()
     );
   }
 
