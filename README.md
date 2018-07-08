@@ -7,13 +7,13 @@ Discord all-purpose bot, made using Spring Boot, JPA, Hibernate, REST, HikariCP.
 | **Code quality:**           | [![coverage-icon]][coverage] [![maintability-icon]][maintability]    |
 | **Continuous Integration:** | [![travis-icon]][travis] [![appveyor-icon]][appveyor]                |
 
-## Rest API
-**{id}** - discord user identifier
+## Endpoints
 
-| End point     | Method | Params | Response |
-| ------------- | ------ | ------ | -------- |
-| /api/v1/user  | GET    |  {id}  | 200      |
-| /api/v1/users | GET    | ------ | 200      |
+| Method                                             | Optional query parameters      | Success status codes   | Error status codes |
+| -------------------------------------------------- | --------------------------     | ---------------------  | ------------------ |                   
+| **GET  /api/users**                                | page, size                     | 200                    |                    |
+| **GET  /api/users/by-id/{id}**                     |                                | 200                    | 404                |
+| **GET  /api/users/by-name/{name}**                 |                                | 200                    | 404                |
 
 ## Features
 - [x] Storing all user's data to mysql database
@@ -40,6 +40,8 @@ spring.messages.encoding=UTF-8
 spring.messages.fallback-to-system-locale=true
 # JDA
 jda.discord.token=your discord key
+# JACKSON
+spring.jackson.serialization.indent_output=true
 ```
 
 ## Contributing
