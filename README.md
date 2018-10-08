@@ -4,7 +4,7 @@ Discord all-purpose bot, made using Spring Boot, JPA, Hibernate, REST, HikariCP.
 ## Services
 | Type                        | Badges                                                               |
 | --------------------------- | -------------------------------------------------------------------- |
-| **Code quality:**           | [![coverage-icon]][coverage] [![maintability-icon]][maintability]    |
+| **Code quality:**           | [![maintability-icon]][maintability]                                 |
 | **Continuous Integration:** | [![travis-icon]][travis] [![appveyor-icon]][appveyor]                |
 
 ## Endpoints
@@ -56,13 +56,11 @@ The first rule, the only rule, is that you need use [Google Code Style][google-c
 ## License
 See the [License][license] file.
 
-[coverage-icon]: https://coveralls.io/repos/github/bmstefanski/friendly-garbanzo/badge.svg?branch=master
-[coverage]: https://coveralls.io/github/bmstefanski/friendly-garbanzo?branch=master
 [maintability-icon]: https://api.codeclimate.com/v1/badges/c3999fe48e9f82826c72/maintainability
 [maintability]: https://codeclimate.com/github/bmstefanski/friendly-garbanzo/maintainability
 [appveyor-icon]: https://ci.appveyor.com/api/projects/status/qekeotnyecdnpr2c/branch/master?svg=true
 [appveyor]: https://ci.appveyor.com/project/bmstefanski/friendly-garbanzo/branch/master
-[travis-icon]: https://travis-ci.org/bmstefanski/friendly-garbanzo.svg?branch=master
-[travis]: https://travis-ci.org/bmstefanski/friendly-garbanzo
-[license]: https://github.com/bmstefanski/friendly-garbanzo/blob/master/LICENSE
+[travis-icon]: https://travis-ci.org/bmstefanski/spring-discord-bot.svg?branch=master
+[travis]: https://travis-ci.org/bmstefanski/spring-discord-bot
+[license]: https://github.com/bmstefanski/spring-discord-bot/blob/master/LICENSE
 [google-code-style]: https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml
