@@ -1,5 +1,5 @@
 # Friendly Garbanzo
-Discord all-purpose bot, made using Spring Boot, JPA, Hibernate, REST, HikariCP. Written for fun, do not take this serious.
+Discord all-purpose bot, made using Spring Boot, JPA, Hibernate, REST, HikariCP. Written for fun, do not take this serious
 
 ## Services
 | Type                        | Badges                                                               |
